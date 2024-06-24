@@ -37,7 +37,7 @@ function Navbar({ topics }) {
     }
   };
 
-  const handelSignOut = () => {
+  const handleSignOut = () => {
     signOut(auth)
       .then(() => {
         setLogin(false);
@@ -54,7 +54,7 @@ function Navbar({ topics }) {
       });
   };
 
-  const handelSignIn = () => {
+  const handleSignIn = () => {
     signInWithPopup(auth, provider)
       .then((res) => {
         const userObj = {
@@ -98,7 +98,7 @@ function Navbar({ topics }) {
               </Link>
 
               <div className="dropdown inline-block relative mx-2">
-                <a className="flex items-center hover:text-indigo-600 text-gray-800 dark:text-gray-50 mx-6 cursor-pointer">
+                <div className="flex items-center hover:text-indigo-600 text-gray-800 dark:text-gray-50 mx-6 cursor-pointer">
                   <span className="text-xl font-semibold">
                     <SiCodefactor className="text-sm" />
                   </span>
@@ -109,7 +109,7 @@ function Navbar({ topics }) {
                   <span className="text-xl font-semibold">
                     <IoMdArrowDropdown className="text-xl" />
                   </span>
-                </a>
+                </div>
                 <ul className="dropdown-menu absolute hidden text-gray-700 pt-1 bg-white dark:bg-dark w-40 pt-6 rounded-xl left-1/3">
                   {topics.map((topic) => (
                     <li className="cursor-pointer" key={topic}>
@@ -146,21 +146,29 @@ function Navbar({ topics }) {
                 </a>
               </Link>
 
-              <button className="flex items-center mx-2 lg:mx-4 text-base text-gray-800 hover:text-indigo-600 dark:text-gray-50">
-                {isMounted && (isLogin ? (
-                  <span
-                    className="md:flex items-center"
-                    onClick={handelSignOut}
-                  >
-                    <span className="hidden md:block text-sm font-medium">Sign Out</span>
-                    <IoLogOutOutline className="text-xl mx-1" />
-                  </span>
-                ) : (
-                  <span className="md:flex items-center" onClick={handelSignIn}>
-                    <span className="hidden md:block text-sm font-medium"> Sign In</span>
-                    <AiOutlineGoogle className="text-xl mx-1" />
-                  </span>
-                ))}
+              <button
+                className="flex items-center mx-2 lg:mx-4 text-base text-gray-800 hover:text-indigo-600 dark:text-gray-50"
+                onClick={isLogin ? handleSignOut : handleSignIn}
+              >
+                {isMounted && (
+                  <>
+                    {isLogin ? (
+                      <span className="md:flex items-center">
+                        <span className="hidden md:block text-sm font-medium">
+                          Sign Out
+                        </span>
+                        <IoLogOutOutline className="text-xl mx-1" />
+                      </span>
+                    ) : (
+                      <span className="md:flex items-center">
+                        <span className="hidden md:block text-sm font-medium">
+                          Sign In
+                        </span>
+                        <AiOutlineGoogle className="text-xl mx-1" />
+                      </span>
+                    )}
+                  </>
+                )}
               </button>
             </div>
           </div>
